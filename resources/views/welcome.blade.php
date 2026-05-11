@@ -23,8 +23,8 @@
         <div class="carousel-inner">
             @forelse ($sliders as $s)
                 <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <img src="{{ asset('assets/back/img/slider/' . $s->image) }}" alt="{{ $s->title }}" class="w-100"
-                        style="height: 100vh; object-fit: cover; object-position: center;">
+                    <img src="{{ asset('storage/assets/back/img/slider/' . $s->image) }}" alt="{{ $s->title }}"
+                        class="w-100" style="height: 100vh; object-fit: cover; object-position: center;">
                     @if ($s->title)
                         <div class="carousel-caption" style="z-index: 2;">
                             <div class="alert alert-info" role="alert">

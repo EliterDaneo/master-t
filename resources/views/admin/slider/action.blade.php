@@ -4,29 +4,32 @@
     <x-ui.button type="modal" :id="$query->id" icon="fa-solid fa-pen-to-square" icon="bi-pencil" />
 
     <x-ui.modal-edit :id="$query->id" title="Edit Kategori" type="modal-xl">
-        <form id="form-edit-category-{{ $query->id }}" action="{{ route('category.update', $query->id) }}"
-            method="POST">
+        <form id="form-edit-slider-{{ $query->id }}" action="{{ route('slider.update', $query->id) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            <div class="row">
-                <div class="col-md-6">
-                    <x-ui.button type="input" title="Nama Kategori" name="name"
-                        placeholder="Masukkan Nama Kategori" value="{{ old('name', $query->name) }}" />
-                </div>
-                <div class="col-md-6">
-                    <x-ui.select title="Status" name="status">
-                        <option value="1" {{ old('status', $query->status) == 1 ? 'selected' : '' }}>
-                            Aktif</option>
-                        <option value="0" {{ old('status', $query->status) == 0 ? 'selected' : '' }}>
-                            Tidak Aktif</option>
-                    </x-ui.select>
-                </div>
+            <div class="mt-2">
+                <img id="preview"
+                    src="{{ $query->image ? asset('storage/assets/back/img/slider/' . $query->image) : '#' }}"
+                    alt="Preview" class="img-thumbnail {{ $query->image ? '' : 'd-none' }}" style="max-height:200px">
             </div>
 
-            <div class="modal-footer">
-                <x-ui.button type="tombol" icon="bi bi-save" title="Simpan" class="btn btn-outline-success" />
-            </div>
+            <x-ui.button type="input" newType="file" title="Image" name="image" placeholder="Masukkan Image" />
+
+            <x-ui.button type="input" title="Judul" name="title" placeholder="Masukkan Judul" :value="$query->title" />
+
+            <x-ui.select name="status" title="Pilih Status">
+                <option disabled>Pilih Status</option>
+                <option value="1" {{ $query->status == 1 ? 'selected' : '' }}>
+                    Aktif
+                </option>
+                <option value="0" {{ $query->status == 0 ? 'selected' : '' }}>
+                    Tidak Aktif
+                </option>
+            </x-ui.select>
+
+            <x-ui.button type="tombol" title="Update" icon="bi bi-save" />
         </form>
     </x-ui.modal-edit>
 

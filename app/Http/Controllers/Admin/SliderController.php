@@ -6,6 +6,7 @@ use App\DataTables\SliderDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
@@ -27,8 +28,9 @@ class SliderController extends Controller
             'status' => 'required|in:0,1',
         ]);
 
-        $imageName = time() . '.' . $request->file('image')->extension();
-        $request->file('image')->move(public_path('assets/back/img/slider'), $imageName);
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->storeAs('assets/back/img/slider/', $imageName, 'public');
 
         Slider::create([
             'title'  => $request->title,
@@ -49,11 +51,16 @@ class SliderController extends Controller
 
         $imageName = $slider->image;
         if ($request->hasFile('image')) {
-            $oldPath = public_path('assets/back/img/slider/' . $slider->image);
-            if (file_exists($oldPath)) unlink($oldPath);
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('assets/back/img/slider/', $imageName, 'public');
 
-            $imageName = time() . '.' . $request->file('image')->extension();
-            $request->file('image')->move(public_path('assets/back/img/slider'), $imageName);
+            // Hapus Gambar lama jika ada
+            if ($slider->image) {
+                Storage::delete('assets/back/img/slider/' . $slider->image);
+            }
+
+            $slider->image = $imageName;
         }
 
         $slider->update([

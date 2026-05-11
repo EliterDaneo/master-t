@@ -19,7 +19,7 @@ class SliderDataTable extends DataTable
                 return view('admin.slider.action', compact('query'));
             })
             ->addColumn('image', function ($query) {
-                return "<img src='" . asset('assets/back/img/slider/' . $query->image) . "' 
+                return "<img src='" . asset('storage/assets/back/img/slider/' . $query->image) . "' 
                         style='width:80px;height:50px;object-fit:cover;border-radius:4px;'>";
             })
             ->addColumn('status', function ($query) {
