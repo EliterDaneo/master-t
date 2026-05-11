@@ -143,7 +143,7 @@ class BeritaController extends Controller
         if ($user->role === 'admin' || ($user->role === 'user' && $post->user_id === $user->id)) {
 
             // Hapus gambar jika ada
-            if ($post->image) {
+            if ($post->image && Storage::disk('public')->exists('assets/back/img/berita/' . $post->image)) {
                 Storage::disk('public')->delete('assets/back/img/berita/' . $post->image);
             }
 

@@ -49,16 +49,18 @@ class SliderController extends Controller
             'status' => 'required|in:0,1',
         ]);
 
-        $imageName = $slider->image;
         if ($request->hasFile('image')) {
+
+            // Hapus gambar lama
+            if ($slider->image && Storage::disk('public')->exists('assets/back/img/slider/' . $slider->image)) {
+                Storage::disk('public')->delete('assets/back/img/slider/' . $slider->image);
+            }
+
+            // Upload gambar baru
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('assets/back/img/slider/', $imageName, 'public');
 
-            // Hapus Gambar lama jika ada
-            if ($slider->image) {
-                Storage::delete('assets/back/img/slider/' . $slider->image);
-            }
+            $image->storeAs('assets/back/img/slider', $imageName, 'public');
 
             $slider->image = $imageName;
         }
@@ -74,8 +76,9 @@ class SliderController extends Controller
 
     public function destroy(Slider $slider)
     {
-        $oldPath = public_path('assets/back/img/slider/' . $slider->image);
-        if (file_exists($oldPath)) unlink($oldPath);
+        if ($slider->image && Storage::disk('public')->exists('assets/back/img/slider/' . $slider->image)) {
+            Storage::disk('public')->delete('assets/back/img/slider/' . $slider->image);
+        }
 
         $slider->delete();
 

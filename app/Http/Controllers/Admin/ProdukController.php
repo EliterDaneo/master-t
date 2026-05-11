@@ -88,14 +88,17 @@ class ProdukController extends Controller
 
         // Handle Upload Gambar
         if ($request->hasFile('image')) {
+
+            // Hapus gambar lama
+            if ($produk->image && Storage::disk('public')->exists('assets/back/img/produk/' . $produk->image)) {
+                Storage::disk('public')->delete('assets/back/img/produk/' . $produk->image);
+            }
+
+            // Upload gambar baru
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('assets/back/img/produk/', $imageName, 'public');
 
-            // Hapus Gambar lama jika ada
-            if ($produk->image) {
-                Storage::delete('assets/back/img/produk/' . $produk->image);
-            }
+            $image->storeAs('assets/back/img/produk', $imageName, 'public');
 
             $produk->image = $imageName;
         }
@@ -114,9 +117,8 @@ class ProdukController extends Controller
 
     public function destroy(Produk $produk)
     {
-        // Hapus Gambar dari storage jika ada
-        if ($produk->image) {
-            Storage::delete('assets/back/img/produk/' . $produk->image);
+        if ($produk->image && Storage::disk('public')->exists('assets/back/img/produk/' . $produk->image)) {
+            Storage::disk('public')->delete('assets/back/img/produk/' . $produk->image);
         }
 
         $produk->delete();

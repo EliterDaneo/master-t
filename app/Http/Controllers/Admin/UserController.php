@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -14,7 +15,7 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(UserDataTable $dataTable)
     {
         return $dataTable->render('admin.user.index');
@@ -33,11 +34,9 @@ class UserController extends Controller
             'avatar'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $avatarName = null;
-        if ($request->hasFile('avatar')) {
-            $avatarName = time() . '.' . $request->file('avatar')->extension();
-            $request->file('avatar')->move(public_path('assets/back/img/avatar'), $avatarName);
-        }
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->storeAs('assets/back/img/avatar/', $imageName, 'public');
 
         User::create([
             'name'         => $request->name,
@@ -47,7 +46,7 @@ class UserController extends Controller
             'phone'        => $request->phone,
             'address'      => $request->address,
             'asal_sekolah' => $request->asal_sekolah,
-            'avatar'       => $avatarName,
+            'avatar'       => $imageName,
         ]);
 
         return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
@@ -67,13 +66,18 @@ class UserController extends Controller
         ]);
 
         $avatarName = $user->avatar;
-        if ($request->hasFile('avatar')) {
-            if ($avatarName) {
-                $oldPath = public_path('assets/back/img/avatar/' . $avatarName);
-                if (file_exists($oldPath)) unlink($oldPath);
+        if ($request->hasFile('image')) {
+
+            // Hapus gambar lama
+            if ($user->image && Storage::disk('public')->exists('assets/back/img/avatar/' . $user->image)) {
+                Storage::disk('public')->delete('assets/back/img/avatar/' . $user->image);
             }
-            $avatarName = time() . '.' . $request->file('avatar')->extension();
-            $request->file('avatar')->move(public_path('assets/back/img/avatar'), $avatarName);
+
+            // Upload gambar baru
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->storeAs('assets/back/img/avatar', $imageName, 'public');
         }
 
         $data = [
@@ -97,9 +101,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if ($user->avatar) {
-            $oldPath = public_path('assets/back/img/avatar/' . $user->avatar);
-            if (file_exists($oldPath)) unlink($oldPath);
+        if ($user->image && Storage::disk('public')->exists('assets/back/img/avatar/' . $user->image)) {
+            Storage::disk('public')->delete('assets/back/img/avatar/' . $user->image);
         }
 
         $user->delete();

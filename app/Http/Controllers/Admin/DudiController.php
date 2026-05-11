@@ -6,6 +6,7 @@ use App\DataTables\DudiDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Dudi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DudiController extends Controller
 {
@@ -29,8 +30,9 @@ class DudiController extends Controller
             'link'   => 'required|url|max:255',
         ]);
 
-        $imageName = time() . '.' . $request->file('image')->extension();
-        $request->file('image')->move(public_path('assets/back/img/dudi'), $imageName);
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->storeAs('assets/back/img/dudi/', $imageName, 'public');
 
         Dudi::create([
             'name'   => $request->name,
@@ -53,12 +55,19 @@ class DudiController extends Controller
         ]);
 
         $imageName = $dudi->image;
-        if ($request->hasFile('image')) {
-            $oldPath = public_path('assets/back/img/dudi/' . $dudi->image);
-            if (file_exists($oldPath)) unlink($oldPath);
 
-            $imageName = time() . '.' . $request->file('image')->extension();
-            $request->file('image')->move(public_path('assets/back/img/dudi'), $imageName);
+        if ($request->hasFile('image')) {
+
+            // Hapus gambar lama
+            if ($dudi->image && Storage::disk('public')->exists('assets/back/img/dudi/' . $dudi->image)) {
+                Storage::disk('public')->delete('assets/back/img/dudi/' . $dudi->image);
+            }
+
+            // Upload gambar baru
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->storeAs('assets/back/img/dudi', $imageName, 'public');
         }
 
         $dudi->update([
@@ -69,16 +78,22 @@ class DudiController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('dudi.index')->with('success', 'Data berhasil diperbarui!');
+        return redirect()->route('dudi.index')
+            ->with('success', 'Data berhasil diperbarui!');
     }
 
     public function destroy(Dudi $dudi)
     {
-        $oldPath = public_path('assets/back/img/dudi/' . $dudi->image);
-        if (file_exists($oldPath)) unlink($oldPath);
+        if ($dudi->image && Storage::disk('public')->exists('assets/back/img/dudi/' . $dudi->image)) {
+            Storage::disk('public')->delete('assets/back/img/dudi/' . $dudi->image);
+        }
 
+        // Hapus data
         $dudi->delete();
 
-        return response()->json(['status' => 'success']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil dihapus'
+        ]);
     }
 }

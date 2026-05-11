@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Struktur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StrukturController extends Controller
 {
@@ -12,7 +13,7 @@ class StrukturController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         $strukturs = $this->cari($request->q);
@@ -46,8 +47,9 @@ class StrukturController extends Controller
             'order'          => 'required|integer',
         ]);
 
-        $imageName = time() . '.' . $request->file('image')->extension();
-        $request->file('image')->move(public_path('assets/back/img/struktur'), $imageName);
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->storeAs('assets/back/img/struktur/', $imageName, 'public');
 
         Struktur::create([
             'name'           => $request->name,
@@ -79,22 +81,26 @@ class StrukturController extends Controller
             'order'          => 'required|integer',
         ]);
 
-        $imageName = $struktur->image;
         if ($request->hasFile('image')) {
+
             // Hapus gambar lama
-            $oldPath = public_path('assets/back/img/struktur/' . $struktur->image);
-            if (file_exists($oldPath)) {
-                unlink($oldPath);
+            if ($struktur->image && Storage::disk('public')->exists('assets/back/img/struktur/' . $struktur->image)) {
+                Storage::disk('public')->delete('assets/back/img/struktur/' . $struktur->image);
             }
-            $imageName = time() . '.' . $request->file('image')->extension();
-            $request->file('image')->move(public_path('assets/back/img/struktur'), $imageName);
+
+            // Upload gambar baru
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->storeAs('assets/back/img/struktur', $imageName, 'public');
+
+            $struktur->image = $imageName;
         }
 
         $struktur->update([
             'name'           => $request->name,
             'title'          => $request->title,
             'position_label' => $request->position_label,
-            'image'          => $imageName,
             'bg_color'       => $request->bg_color,
             'position_level' => $request->position_level,
             'order'          => $request->order,
@@ -105,6 +111,10 @@ class StrukturController extends Controller
 
     public function destroy(Struktur $struktur)
     {
+        if ($struktur->image && Storage::disk('public')->exists('assets/back/img/struktur/' . $struktur->image)) {
+            Storage::disk('public')->delete('assets/back/img/struktur/' . $struktur->image);
+        }
+
         $struktur->delete();
 
         return response()->json(['status' => 'success']);

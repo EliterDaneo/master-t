@@ -76,7 +76,7 @@
                             <div class="card-body">
                                 <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center overflow-hidden"
                                     style="width:70px;height:70px;background:{{ $struktur->bg_color }};">
-                                    <img src="{{ asset('assets/back/img/struktur/' . $struktur->image) }}"
+                                    <img src="{{ asset('storage/assets/back/img/struktur/' . $struktur->image) }}"
                                         alt="{{ $struktur->name }}" style="width:100%;height:100%;object-fit:cover;">
                                 </div>
                                 <h6 class="font-weight-bold mb-1">{{ $struktur->name }}</h6>
@@ -343,7 +343,7 @@
                                             <div class="card-body">
                                                 <div class="mx-auto mb-2 rounded d-flex align-items-center justify-content-center overflow-hidden"
                                                     style="width:56px;height:56px;background:#E6F1FB;">
-                                                    <img src="{{ asset('assets/back/img/dudi/' . $d->image) }}"
+                                                    <img src="{{ asset('storage/assets/back/img/dudi/' . $d->image) }}"
                                                         alt="{{ $d->name }}"
                                                         style="width:100%;height:100%;object-fit:contain;">
                                                 </div>

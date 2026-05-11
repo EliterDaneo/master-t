@@ -31,16 +31,16 @@ Route::prefix('admin')->group(function () {
         Route::resource('/berita', App\Http\Controllers\Admin\BeritaController::class, ['only' => ['create', 'store', 'destroy', 'index']]);
         Route::get('/{slug}/edit', [App\Http\Controllers\Admin\BeritaController::class, 'edit'])->name('berita.edit');
         Route::put('/{slug}/update', [App\Http\Controllers\Admin\BeritaController::class, 'update'])->name('berita.update');
-        Route::resource('order', \App\Http\Controllers\Admin\OrderController::class);
-        Route::resource('produk', \App\Http\Controllers\Admin\ProdukController::class);
+        Route::resource('order', \App\Http\Controllers\Admin\OrderController::class, ['only' => ['index']]);
+        Route::resource('produk', \App\Http\Controllers\Admin\ProdukController::class, ['only' => ['create', 'store', 'destroy', 'index', 'edit', 'update']]);
 
 
         Route::group(['middleware' => 'admin'], function () {
-            Route::resource('struktur', \App\Http\Controllers\Admin\StrukturController::class);
-            Route::resource('vm', \App\Http\Controllers\Admin\VisiMisiController::class);
-            Route::resource('slider', \App\Http\Controllers\Admin\SliderController::class);
-            Route::resource('dudi', \App\Http\Controllers\Admin\DudiController::class);
-            Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
+            Route::resource('struktur', \App\Http\Controllers\Admin\StrukturController::class, ['only' => ['create', 'store', 'destroy', 'index', 'edit', 'update']]);
+            Route::resource('vm', \App\Http\Controllers\Admin\VisiMisiController::class, ['only' => ['create', 'store', 'destroy', 'index', 'edit', 'update']]);
+            Route::resource('slider', \App\Http\Controllers\Admin\SliderController::class, ['only' => ['store', 'destroy', 'index', 'update']]);
+            Route::resource('dudi', \App\Http\Controllers\Admin\DudiController::class, ['only' => ['store', 'destroy', 'index', 'update']]);
+            Route::resource('user', \App\Http\Controllers\Admin\UserController::class, ['only' => ['store', 'destroy', 'index', 'update']]);
         });
     });
 });

@@ -52,7 +52,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                         <div class="mt-2">
-                            <img id="preview" src="{{ asset('assets/back/img/struktur/' . $struktur->image) }}"
+                            <img id="preview" src="{{ asset('storage/assets/back/img/struktur/' . $struktur->image) }}"
                                 alt="Preview" class="img-thumbnail" style="max-height:200px">
                         </div>
                     </div>

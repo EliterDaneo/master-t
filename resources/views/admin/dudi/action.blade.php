@@ -11,7 +11,7 @@
 
             <div class="row">
                 <div class="col-md-12 mb-2">
-                    <img src="{{ asset('assets/back/img/dudi/' . $query->image) }}" alt="{{ $query->name }}"
+                    <img src="{{ asset('storage/assets/back/img/dudi/' . $query->image) }}" alt="{{ $query->name }}"
                         id="preview-{{ $query->id }}" class="img-thumbnail" style="max-height:150px;">
                 </div>
                 <div class="col-md-12">

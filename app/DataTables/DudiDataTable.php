@@ -19,7 +19,7 @@ class DudiDataTable extends DataTable
                 return view('admin.dudi.action', compact('query'));
             })
             ->addColumn('image', function ($query) {
-                return "<img src='" . asset('assets/back/img/dudi/' . $query->image) . "'
+                return "<img src='" . asset('storage/assets/back/img/dudi/' . $query->image) . "'
                         style='width:80px;height:50px;object-fit:cover;border-radius:4px;'>";
             })
             ->addColumn('link', function ($query) {
