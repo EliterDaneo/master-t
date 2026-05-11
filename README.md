@@ -69,8 +69,7 @@ Proyek ini lahir dari kebutuhan nyata sekolah vokasi untuk:
 | **Katalog Produk**  | Daftar produk dan layanan jasa hasil karya siswa beserta detail dan harga |
 | **Form Order**      | Formulir pemesanan online yang langsung tersimpan ke sistem admin         |
 | **Mitra Industri**  | Profil rekanan dan mitra industri yang bekerja sama dengan sekolah        |
-| **Galeri**          | Koleksi foto dan video dokumentasi kegiatan sekolah                       |
-| **Profil Sekolah**  | Visi, misi, dan struktur organisasi sekolah                               |
+| **Struktur Organisasi**  | Visi, misi, dan struktur organisasi sekolah                          |
 
 ### 🔧 Panel Administrasi
 
@@ -80,7 +79,6 @@ Proyek ini lahir dari kebutuhan nyata sekolah vokasi untuk:
 | **Manajemen Berita**  | CRUD artikel berita beserta gambar ilustrasi            |
 | **Manajemen Produk**  | CRUD katalog produk dengan kategorisasi                 |
 | **Manajemen Order**   | Lihat, perbarui status, dan kelola pesanan masuk        |
-| **Manajemen Galeri**  | Unggah, organisasi, dan hapus media foto/video          |
 | **Manajemen Mitra**   | CRUD data rekanan dan mitra industri                    |
 | **Pengaturan Konten** | Pengelolaan slider, profil sekolah, dan pengaturan umum |
 
@@ -474,7 +472,6 @@ sudo systemctl restart apache2
     - **Berita** → Tambah/edit/hapus artikel
     - **Produk** → Kelola katalog produk
     - **Order** → Pantau dan proses pesanan masuk
-    - **Galeri** → Unggah foto dan video
     - **Mitra** → Kelola data rekanan industri
 
 ### Membuat Akun Admin Pertama
