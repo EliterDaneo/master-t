@@ -52,7 +52,8 @@
                 </div>
             </div>
 
-            <x-ui.textarea name="content" title="Deskripsi Produk" placeholder="Masukkan Deskripsi Produk">{!! old('content') !!}</x-ui.textarea>
+            <x-ui.textarea name="content" title="Deskripsi Produk"
+                placeholder="Masukkan Deskripsi Produk">{!! old('content') !!}</x-ui.textarea>
 
             <div class="mt-4">
                 <x-ui.button type="tombol" title="Simpan Produk" icon="bi bi-save" />
@@ -64,26 +65,35 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.6.2/tinymce.min.js"></script>
-    <script>
-        function previewImage(input) {
-            const preview = document.getElementById('img-preview');
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    preview.src = e.target.result;
-                    preview.classList.remove('d-none');
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+    @push('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.6.2/tinymce.min.js"></script>
+        <script>
+            var editor_config = {
+                selector: "textarea.content",
+                plugins: [
+                    "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen",
+                    "insertdatetime media nonbreaking save table contextmenu directionality",
+                    "emoticons template paste textcolor colorpicker textpattern"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+                relative_urls: false,
+            };
 
-        tinymce.init({
-            selector: "textarea.content-editor",
-            height: 400,
-            plugins: "advlist autolink lists link image charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking save table directionality emoticons template paste textpattern",
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
-            relative_urls: false,
-        });
-    </script>
+            tinymce.init(editor_config);
+        </script>
+        <script>
+            function previewImage(input) {
+                const preview = document.getElementById('img-preview');
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                        preview.src = e.target.result;
+                        preview.classList.remove('d-none');
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
+    @endpush
 @endpush

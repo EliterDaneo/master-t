@@ -18,6 +18,6 @@ class AdminMiddleware
         }
 
         // Jika bukan admin, arahkan ke halaman beranda atau berikan error 403
-        return redirect()->back(['error', 'Anda tidak memiliki akses ke halaman ini.']);
+        return redirect()->back()->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 }

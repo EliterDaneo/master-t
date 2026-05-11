@@ -29,18 +29,28 @@
 
             @forelse ($beritas as $index)
                 {{-- Contoh jika menggunakan loop --}}
-                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="{{ $loop->iteration * 100 }}">
+                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="50">
                     <div class="card h-100 shadow-sm border-0 rounded-lg">
-                        <img src="{{ asset('assets/images/12.jpeg') }}" class="w-100"
+                        <img src="{{ asset('storage/assets/back/img/berita/' . $index->image) }}" class="w-100"
                             style="height:200px;object-fit:cover;border-top-left-radius:.3rem;border-top-right-radius:.3rem;">
                         <div class="card-body">
                             <a href="{{ route('berita.detail', $index->slug) }}" class="text-dark text-decoration-none">
-                                <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h6>
+                                <h6>{{ $index->title }}</h6>
                             </a>
+                            <p class="text-muted small mb-0">
+                                {!! Str::limit($index->content, 100, '...') !!}
+                            </p>
                         </div>
-                        <div class="card-footer bg-white">
-                            <i class="fa fa-calendar"></i> 07 Mei 2026
-                            <i class="fa fa-calendar"></i> 07 Mei 2026
+                        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                            <span>
+                                <i class="bi bi-calendar"></i>
+                                {{ $index->created_at->diffForHumans() }}
+                            </span>
+
+                            <span>
+                                <i class="bi bi-people"></i>
+                                {{ $index->user->asal_sekolah ?? 'Admin' }}
+                            </span>
                         </div>
                     </div>
                 </div>

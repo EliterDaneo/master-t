@@ -187,6 +187,9 @@
                             <a href="{{ route('berita.detail', $index->slug) }}" class="text-dark text-decoration-none">
                                 <h6>{{ $index->title }}</h6>
                             </a>
+                            <p class="text-muted small mb-0">
+                                {!! Str::limit($index->content, 100, '...') !!}
+                            </p>
                         </div>
                         <div class="card-footer bg-white d-flex justify-content-between align-items-center">
                             <span>
@@ -253,6 +256,13 @@
                                             Rp {{ number_format($produk->price, 0, ',', '.') }}
                                         </h5>
                                     </div>
+                                    <hr>
+
+                                    {{-- Label Kategori (Opsional jika ada relasi) --}}
+                                    <small class="text-muted">
+                                        <i class="bi bi-card-list mr-1"></i>
+                                        {{ $produk->user->asal_sekolah ?? 'Admin' }}
+                                    </small>
                                 </div>
 
                                 <div class="card-footer bg-white border-top-0 pb-3">
@@ -270,11 +280,8 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-12 py-5 text-center">
-                            <img src="https://illustrations.popsy.co/amber/empty-cart.svg" style="width: 200px;"
-                                alt="Kosong">
-                            <h5 class="mt-4 text-muted">Belum Ada Produk Yang Tersedia</h5>
-                            <p class="text-muted small">Coba hubungi kami untuk informasi lebih lanjut.</p>
+                        <div class="alert alert-danger text-center" role="alert">
+                            Belum Ada Produk Yang Tersedia
                         </div>
                     @endforelse
                 </div>
