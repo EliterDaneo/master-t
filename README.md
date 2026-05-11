@@ -23,6 +23,7 @@
 
 - [Tentang Proyek](#-tentang-proyek)
 - [Fitur Utama](#-fitur-utama)
+- [Screenshot](#-screenshot)
 - [Arsitektur & Teknologi](#-arsitektur--teknologi)
 - [Struktur Direktori](#-struktur-direktori)
 - [Prasyarat Sistem](#-prasyarat-sistem)
@@ -62,14 +63,14 @@ Proyek ini lahir dari kebutuhan nyata sekolah vokasi untuk:
 
 ### 🌐 Halaman Publik
 
-| Modul               | Deskripsi                                                                 |
-| ------------------- | ------------------------------------------------------------------------- |
-| **Beranda**         | Slider gambar dinamis, berita terbaru, dan produk unggulan                |
-| **Berita & Agenda** | Artikel berita sekolah dan jadwal kegiatan dengan tampilan kronologis     |
-| **Katalog Produk**  | Daftar produk dan layanan jasa hasil karya siswa beserta detail dan harga |
-| **Form Order**      | Formulir pemesanan online yang langsung tersimpan ke sistem admin         |
-| **Mitra Industri**  | Profil rekanan dan mitra industri yang bekerja sama dengan sekolah        |
-| **Struktur Organisasi**  | Visi, misi, dan struktur organisasi sekolah                          |
+| Modul                   | Deskripsi                                                                 |
+| ----------------------- | ------------------------------------------------------------------------- |
+| **Beranda**             | Slider gambar dinamis, berita terbaru, dan produk unggulan                |
+| **Berita & Agenda**     | Artikel berita sekolah dan jadwal kegiatan dengan tampilan kronologis     |
+| **Katalog Produk**      | Daftar produk dan layanan jasa hasil karya siswa beserta detail dan harga |
+| **Form Order**          | Formulir pemesanan online yang langsung tersimpan ke sistem admin         |
+| **Mitra Industri**      | Profil rekanan dan mitra industri yang bekerja sama dengan sekolah        |
+| **Struktur Organisasi** | Visi, misi, dan struktur organisasi sekolah                               |
 
 ### 🔧 Panel Administrasi
 
@@ -81,6 +82,46 @@ Proyek ini lahir dari kebutuhan nyata sekolah vokasi untuk:
 | **Manajemen Order**   | Lihat, perbarui status, dan kelola pesanan masuk        |
 | **Manajemen Mitra**   | CRUD data rekanan dan mitra industri                    |
 | **Pengaturan Konten** | Pengelolaan slider, profil sekolah, dan pengaturan umum |
+
+---
+
+## 📸 Screenshot
+
+Berikut tampilan antarmuka TEFA MUTU:
+
+### 🖥️ Halaman Publik
+
+**Slider / Beranda**
+![Slider](ss/slider.png)
+
+**Halaman Berita**
+![Berita](ss/berita.png)
+
+**Detail Berita**
+![Detail Berita](ss/detail-berita.png)
+
+**Katalog Produk**
+![Produk](ss/produk.png)
+
+**Detail Produk**
+![Detail Produk](ss/detail-produk.png)
+
+**Form Order**
+![Order](ss/order.png)
+
+**Halaman Kontak**
+![Kontak](ss/kontak.png)
+
+**Visi & Misi**
+![Visi dan Misi](ss/visi%20dan%20misi.png)
+
+**Struktur Organisasi**
+![Struktur](ss/struktur.png)
+
+### 🔧 Panel Administrasi
+
+**Dashboard Admin**
+![Dashboard Admin](ss/dudi.png)
 
 ---
 
@@ -157,6 +198,18 @@ sitefa/
 │
 ├── routes/
 │   └── web.php                   # Definisi seluruh rute HTTP
+│
+├── ss/                           # Screenshot tampilan aplikasi
+│   ├── slider.png
+│   ├── berita.png
+│   ├── detail-berita.png
+│   ├── produk.png
+│   ├── detail-produk.png
+│   ├── order.png
+│   ├── kontak.png
+│   ├── struktur.png
+│   ├── visi dan misi.png
+│   └── dudi.png
 │
 ├── storage/                      # File upload, log, dan cache
 ├── tests/                        # Unit test & Feature test (PHPUnit)
