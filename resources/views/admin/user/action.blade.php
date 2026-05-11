@@ -13,7 +13,7 @@
                 <div class="col-md-4 text-center border-right">
                     <div class="mb-3">
                         <label class="form-label d-block">Avatar</label>
-                        <img src="{{ $query->avatar ? asset('storage/avatars/' . $query->avatar) : asset('assets/back/img/default-avatar.png') }}"
+                        <img src="{{ $query->avatar ? asset('storage/assets/back/img/avatar/' . $query->avatar) : asset('assets/back/img/avatar/avatar-1.png') }}"
                             alt="{{ $query->name }}" id="preview-{{ $query->id }}"
                             class="img-thumbnail rounded-circle mb-2"
                             style="width:150px; height:150px; object-fit:cover;">

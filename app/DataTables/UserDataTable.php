@@ -20,8 +20,8 @@ class UserDataTable extends DataTable
             })
             ->addColumn('avatar', function ($query) {
                 $src = $query->avatar
-                    ? asset('assets/back/img/avatar/' . $query->avatar)
-                    : asset('assets/back/img/avatar/default.png');
+                    ? asset('storage/assets/back/img/avatar/' . $query->avatar)
+                    : asset('assets/back/img/avatar/avatar-1.png');
                 return "<img src='{$src}' style='width:40px;height:40px;object-fit:cover;border-radius:50%;'>";
             })
             ->addColumn('role', function ($query) {
