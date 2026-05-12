@@ -26,7 +26,7 @@ class UserController extends Controller
         $request->validate([
             'name'         => 'required|string|max:255',
             'email'        => 'required|email|unique:users,email',
-            'password'     => 'required|string|min:8|confirmed',
+            'password'     => 'required|string|min:8',
             'role'         => 'required|in:admin,writer,user',
             'phone'        => 'nullable|string|max:20',
             'address'      => 'nullable|string|max:255',
@@ -34,9 +34,20 @@ class UserController extends Controller
             'avatar'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $image = $request->file('image');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $image->storeAs('assets/back/img/avatar/', $imageName, 'public');
+        $avatarName = null;
+
+        // Upload avatar jika ada
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+
+            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+
+            $avatar->storeAs(
+                'assets/back/img/avatar',
+                $avatarName,
+                'public'
+            );
+        }
 
         User::create([
             'name'         => $request->name,
@@ -46,10 +57,12 @@ class UserController extends Controller
             'phone'        => $request->phone,
             'address'      => $request->address,
             'asal_sekolah' => $request->asal_sekolah,
-            'avatar'       => $imageName,
+            'avatar'       => $avatarName,
         ]);
 
-        return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
+        return redirect()
+            ->route('user.index')
+            ->with('success', 'User berhasil ditambahkan!');
     }
 
     public function update(Request $request, User $user)
@@ -57,7 +70,7 @@ class UserController extends Controller
         $request->validate([
             'name'         => 'required|string|max:255',
             'email'        => 'required|email|unique:users,email,' . $user->id,
-            'password'     => 'nullable|string|min:8|confirmed',
+            'password'     => 'nullable|string|min:8',
             'role'         => 'required|in:admin,writer,user',
             'phone'        => 'nullable|string|max:20',
             'address'      => 'nullable|string|max:255',
@@ -66,18 +79,28 @@ class UserController extends Controller
         ]);
 
         $avatarName = $user->avatar;
-        if ($request->hasFile('image')) {
 
-            // Hapus gambar lama
-            if ($user->image && Storage::disk('public')->exists('assets/back/img/avatar/' . $user->image)) {
-                Storage::disk('public')->delete('assets/back/img/avatar/' . $user->image);
+        // Jika upload avatar baru
+        if ($request->hasFile('avatar')) {
+
+            // Hapus avatar lama
+            if (
+                $user->avatar &&
+                Storage::disk('public')->exists('assets/back/img/avatar/' . $user->avatar)
+            ) {
+                Storage::disk('public')->delete('assets/back/img/avatar/' . $user->avatar);
             }
 
-            // Upload gambar baru
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            // Upload avatar baru
+            $avatar = $request->file('avatar');
 
-            $image->storeAs('assets/back/img/avatar', $imageName, 'public');
+            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+
+            $avatar->storeAs(
+                'assets/back/img/avatar',
+                $avatarName,
+                'public'
+            );
         }
 
         $data = [
@@ -90,13 +113,16 @@ class UserController extends Controller
             'avatar'       => $avatarName,
         ];
 
+        // Update password jika diisi
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
 
         $user->update($data);
 
-        return redirect()->route('user.index')->with('success', 'User berhasil diperbarui!');
+        return redirect()
+            ->route('user.index')
+            ->with('success', 'User berhasil diperbarui!');
     }
 
     public function destroy(User $user)
