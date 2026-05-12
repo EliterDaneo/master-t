@@ -24,7 +24,8 @@
                 <h5>KONTAK</h5>
                 <hr>
                 <p>
-                    <i class="bi bi-geo-alt" aria-hidden="true"></i> Diisi Alamat Sesuai Tempat <br>
+                    <i class="bi bi-geo-alt" aria-hidden="true"></i> Jl. KH. Ahmad Dahlan No. 6, Tegalrejo, Jaraksari,
+                    Kec. Wonosobo, Kabupaten Wonosobo, Jawa Tengah 56311.<br>
 
                     <i class="bi bi-telephone"></i> +62857-8585-2224
                 </p>
