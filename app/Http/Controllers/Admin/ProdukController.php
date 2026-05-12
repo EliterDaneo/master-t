@@ -64,6 +64,10 @@ class ProdukController extends Controller
 
     public function edit(Produk $produk)
     {
+        if (!$produk) {
+            return redirect()->route('produk.index')->with('error', 'Produk tidak ditemukan.');
+        }
+
         $categories = Category::latest()
             ->when(Auth::user()->role !== 'admin', function ($query) {
                 $query->where('user_id', Auth::id());

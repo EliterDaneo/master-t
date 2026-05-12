@@ -55,6 +55,9 @@ class VisiMisiController extends Controller
 
     public function edit(Vm $vm)
     {
+        if (!$vm) {
+            return redirect()->route('vm.index')->with('error', 'Data tidak ditemukan.');
+        }
         return view('admin.vm.edit', compact('vm'));
     }
 

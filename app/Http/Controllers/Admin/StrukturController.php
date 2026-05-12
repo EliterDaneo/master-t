@@ -66,6 +66,9 @@ class StrukturController extends Controller
 
     public function edit(Struktur $struktur)
     {
+        if (!$struktur) {
+            return redirect()->route('struktur.index')->with('error', 'Data tidak ditemukan.');
+        }
         return view('admin.struktur.edit', compact('struktur'));
     }
 
