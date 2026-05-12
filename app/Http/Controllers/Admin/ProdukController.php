@@ -62,10 +62,18 @@ class ProdukController extends Controller
         return redirect()->route('produk.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    public function edit(Produk $produk)
+    public function edit($id)
     {
+        $produk = Produk::where('id', $id)
+            ->when(Auth::user()->role !== 'admin', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
+            ->first();
+
         if (!$produk) {
-            return redirect()->route('produk.index')->with('error', 'Produk tidak ditemukan.');
+            return redirect()
+                ->route('produk.index')
+                ->with('error', 'Produk tidak ditemukan atau tidak memiliki akses.');
         }
 
         $categories = Category::latest()
@@ -73,6 +81,7 @@ class ProdukController extends Controller
                 $query->where('user_id', Auth::id());
             })
             ->get();
+
         return view('admin.produk.edit', compact('produk', 'categories'));
     }
 

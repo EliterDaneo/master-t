@@ -29,8 +29,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard.index');
         Route::resource('/category', App\Http\Controllers\Admin\CategoryController::class, ['only' => ['create', 'store', 'update', 'destroy', 'index']]);
         Route::resource('/berita', App\Http\Controllers\Admin\BeritaController::class, ['only' => ['create', 'store', 'destroy', 'index']]);
-        Route::get('/{slug}/edit', [App\Http\Controllers\Admin\BeritaController::class, 'edit'])->name('berita.edit');
-        Route::put('/{slug}/update', [App\Http\Controllers\Admin\BeritaController::class, 'update'])->name('berita.update');
+        Route::get('/berita/{slug}/edit', [App\Http\Controllers\Admin\BeritaController::class, 'edit'])->name('berita.edit');
+        Route::put('/berita/{slug}/update', [App\Http\Controllers\Admin\BeritaController::class, 'update'])->name('berita.update');
         Route::resource('order', \App\Http\Controllers\Admin\OrderController::class, ['only' => ['index']]);
         Route::resource('produk', \App\Http\Controllers\Admin\ProdukController::class, ['only' => ['create', 'store', 'destroy', 'index', 'edit', 'update']]);
 

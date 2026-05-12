@@ -80,15 +80,26 @@ class BeritaController extends Controller
 
     public function edit($slug)
     {
-        $post = Post::where('slug', $slug)->first();
+        $post = Post::where('slug', $slug)
+            ->when(Auth::user()->role !== 'admin', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
+            ->first();
+
         if (!$post) {
-            return redirect()->route('berita.index')->with(['error' => 'Data Tidak Ditemukan!']);
+            return redirect()
+                ->route('berita.index')
+                ->with([
+                    'error' => 'Data tidak ditemukan atau tidak memiliki akses.'
+                ]);
         }
+
         $categories = Category::latest()
             ->when(Auth::user()->role !== 'admin', function ($query) {
                 $query->where('user_id', Auth::id());
             })
             ->get();
+
         return view('admin.berita.edit', compact('post', 'categories'));
     }
 
