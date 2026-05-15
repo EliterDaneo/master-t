@@ -1,34 +1,622 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-
-body{
-    font-family: 'Quicksand', sans-serif;
+.category-item:hover {
+    background: rgba(175, 140, 226, 0.18) !important;
+    border-color: rgba(175, 140, 226, 0.5) !important;
+    transform: translateX(6px);
+    color: rgb(220, 200, 255) !important;
 }
 
-.bg-dark{
-    background: #7952b3!important;
+/* Tambahkan di file CSS Anda */
+.product-card {
+    transition: all 0.3s ease;
 }
 
-.breadcrumb {
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.img-wrapper {
+    overflow: hidden;
+}
+
+.product-card:hover .card-img-top {
+    transform: scale(1.1);
+}
+
+.rounded-right {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+/* struktur organisasi */
+.org-wrapper {
+    padding: 0 0 2rem;
+}
+
+.org-level {
     display: flex;
     flex-wrap: wrap;
-    padding: .5rem 1rem;
-    margin-bottom: 1rem;
-    list-style: none;
-    background-color: #7951b3;
-    border-radius: 0px!important;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 0;
 }
 
-.breadcrumb a {
-    color: white;
+.org-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(175, 140, 226, 0.15);
+    box-shadow: 0 4px 20px rgba(83, 74, 183, 0.07);
+    padding: 24px 20px 20px;
+    text-align: center;
+    width: 180px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
 }
 
-.breadcrumb-item+.breadcrumb-item::before {
+.org-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(83, 74, 183, 0.14);
+}
+
+.org-card.is-top {
+    width: 200px;
+    border-top: 3px solid;
+}
+
+.org-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    overflow: hidden;
+    border: 3px solid;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.org-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.org-name {
+    font-weight: 700;
+    font-size: 13px;
+    color: #2d2d2d;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+
+.org-title {
+    font-size: 11px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.org-badge {
     display: inline-block;
-    padding-right: .5rem;
-    color: white;
-    content: "/";
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.3px;
 }
 
-.breadcrumb-item.active {
-    color: white;
+/* Connector */
+.org-connector-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+.org-vline {
+    width: 2px;
+    height: 28px;
+    background: linear-gradient(to bottom, rgb(175, 140, 226), rgba(175, 140, 226, 0.4));
+}
+
+.org-hline-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.org-hline-row-inner {
+    height: 2px;
+    background: linear-gradient(to right, rgba(175, 140, 226, 0.2), rgb(175, 140, 226), rgba(175, 140, 226, 0.2));
+    border-radius: 2px;
+}
+
+.org-vlines-row {
+    display: flex;
+    justify-content: center;
+    gap: 196px;
+}
+
+.org-vlines-row .org-vline {
+    height: 28px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+
+    .org-card,
+    .org-card.is-top {
+        width: 140px;
+        padding: 18px 12px 16px;
+    }
+
+    .org-avatar {
+        width: 52px;
+        height: 52px;
+    }
+
+    .org-name {
+        font-size: 12px;
+    }
+
+    .org-vlines-row {
+        gap: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .org-level {
+        gap: 10px;
+    }
+
+    .org-card,
+    .org-card.is-top {
+        width: 130px;
+        padding: 14px 10px 12px;
+    }
+
+    .org-vlines-row {
+        gap: 100px;
+    }
+}
+
+.berita-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(175, 140, 226, 0.12);
+    box-shadow: 0 4px 20px rgba(83, 74, 183, 0.06);
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.berita-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(83, 74, 183, 0.13);
+}
+
+.berita-img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+
+.berita-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
+}
+
+.berita-card:hover .berita-img-wrap img {
+    transform: scale(1.06);
+}
+
+.berita-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30, 10, 60, 0.55) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.berita-category-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: rgba(175, 140, 226, 0.88);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    text-transform: uppercase;
+}
+
+.berita-body {
+    padding: 18px 20px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.berita-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e1440;
+    line-height: 1.45;
+    margin-bottom: 8px;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+}
+
+.berita-title:hover {
+    color: rgb(175, 140, 226);
+}
+
+.berita-excerpt {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.6;
+    flex: 1;
+}
+
+.berita-footer {
+    padding: 10px 20px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(175, 140, 226, 0.1);
+    margin-top: 12px;
+}
+
+.berita-meta {
+    font-size: 11px;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.berita-meta i {
+    font-size: 12px;
+    color: rgb(175, 140, 226);
+}
+
+.berita-read-btn {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgb(175, 140, 226);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.2s;
+}
+
+.berita-read-btn:hover {
+    gap: 8px;
+    color: #534AB7;
+}
+
+.section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgb(175, 140, 226);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e1440;
+    margin-bottom: 0;
+}
+
+.section-line {
+    width: 40px;
+    height: 3px;
+    background: rgb(175, 140, 226);
+    border-radius: 2px;
+    margin-top: 10px;
+}
+
+.produk-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(175, 140, 226, 0.12);
+    box-shadow: 0 4px 20px rgba(83, 74, 183, 0.06);
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.produk-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(83, 74, 183, 0.13);
+}
+
+.produk-img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+
+.produk-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
+}
+
+.produk-card:hover .produk-img-wrap img {
+    transform: scale(1.06);
+}
+
+.produk-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30, 10, 60, 0.5) 0%, transparent 55%);
+    pointer-events: none;
+}
+
+.produk-cat-badge {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    background: rgba(83, 74, 183, 0.88);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    padding: 4px 14px 4px 12px;
+    border-radius: 0 50px 50px 0;
+}
+
+.produk-body {
+    padding: 16px 18px 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.produk-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1e1440;
+    line-height: 1.4;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+    transition: color 0.2s;
+}
+
+.produk-title:hover {
+    color: rgb(175, 140, 226);
+}
+
+.produk-price {
+    font-size: 16px;
+    font-weight: 800;
+    color: #534AB7;
+    margin-top: auto;
+    margin-bottom: 8px;
+}
+
+.produk-meta {
+    font-size: 11px;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.produk-meta i {
+    color: rgb(175, 140, 226);
+    font-size: 12px;
+}
+
+.produk-footer {
+    padding: 10px 18px 16px;
+    border-top: 1px solid rgba(175, 140, 226, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.produk-detail-btn {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgb(175, 140, 226);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.2s, color 0.2s;
+}
+
+.produk-detail-btn:hover {
+    gap: 8px;
+    color: #534AB7;
+}
+
+/* ===== SIDEBAR KATEGORI ===== */
+.sidebar-kategori {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(175, 140, 226, 0.15);
+    box-shadow: 0 4px 20px rgba(83, 74, 183, 0.07);
+    padding: 24px 20px;
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar-kat-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgb(175, 140, 226);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.sidebar-kat-heading {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1e1440;
+    margin-bottom: 16px;
+}
+
+.kat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(175, 140, 226, 0.1);
+    margin-bottom: 8px;
+    text-decoration: none;
+    color: #444;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.22s ease;
+    background: #faf9ff;
+}
+
+.kat-item:hover {
+    background: rgba(175, 140, 226, 0.1);
+    border-color: rgba(175, 140, 226, 0.4);
+    color: #534AB7;
+    transform: translateX(4px);
+}
+
+.kat-item i {
+    color: rgb(175, 140, 226);
+    font-size: 14px;
+}
+
+.kat-count {
+    background: rgba(175, 140, 226, 0.15);
+    color: #534AB7;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 50px;
+}
+
+/* ===== DUDI MARQUEE ===== */
+.dudi-section {
+    background: linear-gradient(135deg, #f8f5ff 0%, #eef2ff 100%);
+    padding: 60px 0;
+}
+
+.dudi-track-wrap {
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.dudi-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    animation: dudiScroll 28s linear infinite;
+}
+
+.dudi-track:hover {
+    animation-play-state: paused;
+}
+
+.dudi-track-2 {
+    animation: dudiScroll2 34s linear infinite;
+    margin-top: 20px;
+}
+
+.dudi-track-2:hover {
+    animation-play-state: paused;
+}
+
+@keyframes dudiScroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes dudiScroll2 {
+    from {
+        transform: translateX(-50%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.dudi-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid rgba(175, 140, 226, 0.13);
+    box-shadow: 0 4px 16px rgba(83, 74, 183, 0.06);
+    padding: 18px 20px;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow 0.25s, transform 0.25s;
+    cursor: pointer;
+}
+
+.dudi-card:hover {
+    box-shadow: 0 10px 28px rgba(83, 74, 183, 0.14);
+    transform: translateY(-3px);
+    border-color: rgba(175, 140, 226, 0.4);
+}
+
+.dudi-logo-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: #EEF0FB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.dudi-logo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.dudi-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e1440;
+    margin-bottom: 3px;
+    white-space: nowrap;
+}
+
+.dudi-bidang {
+    font-size: 10px;
+    color: #aaa;
+    white-space: nowrap;
 }

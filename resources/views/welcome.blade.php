@@ -1,55 +1,123 @@
 @extends('components.layouts.front.app', ['title' => 'Selamat Datang di TEFA MUTU'])
 
 @section('content')
-    {{-- Slider --}}
-    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="position: relative;">
-        <div
-            style="
-        position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 50%);
-        z-index: 1;
-        pointer-events: none;">
-        </div>
+    {{-- Slider + Kategori --}}
+    <div
+        style="background: linear-gradient(135deg, #1a0533 0%, #2d1060 50%, #0f2a4a 100%); padding-top: 100px; padding-bottom: 80px;">
+        <div class="container">
+            <div class="row align-items-center g-4">
 
-        <ol class="carousel-indicators" style="z-index: 2;">
-            @foreach ($sliders as $index => $s)
-                <li data-bs-target="#myCarousel" data-bs-slide-to="{{ $index }}"
-                    class="{{ $loop->first ? 'active' : '' }}"></li>
-            @endforeach
-        </ol>
-
-        <div class="carousel-inner">
-            @forelse ($sliders as $s)
-                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                    <img src="{{ asset('storage/assets/back/img/slider/' . $s->image) }}" alt="{{ $s->title }}"
-                        class="w-100" style="height: 100vh; object-fit: cover; object-position: center;">
-                    @if ($s->title)
-                        <div class="carousel-caption" style="z-index: 2;">
-                            <div class="alert alert-info" role="alert">
-                                <h5>{{ $s->title }}</h5>
-                            </div>
+                {{-- Kolom Kategori (col-4) --}}
+                <div class="col-md-4" data-aos="fade-right">
+                    <div class="mb-4">
+                        <small class="text-uppercase fw-bold"
+                            style="color: rgb(175,140,226); letter-spacing: 3px; font-size: 11px;">Jelajahi</small>
+                        <h3 class="text-white fw-bold mt-1 mb-0" style="font-size: 1.8rem; line-height: 1.2;">
+                            Kategori <br>Produk Kami
+                        </h3>
+                        <div
+                            style="width: 40px; height: 3px; background: rgb(175,140,226); margin-top: 12px; border-radius: 2px;">
                         </div>
-                    @endif
-                </div>
-            @empty
-                <div class="carousel-item active">
-                    <div class="alert alert-danger text-center" role="alert">
-                        Belum Ada Slider Yang Tersedia
+                    </div>
+
+                    <div class="d-flex flex-column gap-2">
+                        @forelse ($category as $c)
+                            <a href="{{ route('produk', ['category' => $c->slug]) }}"
+                                class="d-flex justify-content-between align-items-center text-decoration-none px-4 py-3 rounded-pill category-item"
+                                style="background: rgba(255,255,255,0.07); border: 1px solid rgba(175,140,226,0.2); color: #fff; transition: all 0.3s ease;">
+                                <span class="d-flex align-items-center gap-2" style="font-size: 0.9rem;">
+                                    <i class="bi bi-grid-3x3-gap-fill" style="color: rgb(175,140,226);"></i>
+                                    {{ $c->name }}
+                                </span>
+                                <span class="badge rounded-pill px-2 py-1"
+                                    style="background: rgba(175,140,226,0.3); color: rgb(210,190,255); font-size: 11px;">
+                                    {{ $c->posts_count }}
+                                </span>
+                            </a>
+                        @empty
+                            <p class="text-muted small">Belum ada kategori tersedia.</p>
+                        @endforelse
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="{{ route('produk') }}" class="btn px-4 py-2 rounded-pill fw-semibold"
+                            style="background: rgb(175,140,226); color: #fff; font-size: 0.85rem; border: none;">
+                            <i class="bi bi-box-seam me-1"></i> Lihat Semua Produk
+                        </a>
                     </div>
                 </div>
-            @endforelse
-        </div>
 
-        <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev" style="z-index: 2;">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next" style="z-index: 2;">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </a>
+                {{-- Kolom Slider (col-8) --}}
+                <div class="col-md-8" data-aos="fade-left">
+                    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel"
+                        style="border-radius: 24px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.5);">
+
+                        <ol class="carousel-indicators" style="margin-bottom: 16px; z-index: 2;">
+                            @foreach ($sliders as $index => $s)
+                                <li data-bs-target="#myCarousel" data-bs-slide-to="{{ $index }}"
+                                    class="{{ $loop->first ? 'active' : '' }}"
+                                    style="width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); border: none;">
+                                </li>
+                            @endforeach
+                        </ol>
+
+                        <div class="carousel-inner" style="border-radius: 24px;">
+                            @forelse ($sliders as $s)
+                                <div class="carousel-item {{ $loop->first ? 'active' : '' }}" style="position: relative;">
+                                    {{-- Gradient overlay --}}
+                                    <div
+                                        style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,0,30,0.75) 0%, rgba(0,0,0,0.1) 60%, transparent 100%); z-index: 1; pointer-events: none; border-radius: 24px;">
+                                    </div>
+
+                                    <img src="{{ asset('storage/assets/back/img/slider/' . $s->image) }}"
+                                        alt="{{ $s->title }}" class="w-100"
+                                        style="height: 460px; object-fit: cover; object-position: center; display: block;">
+
+                                    @if ($s->title)
+                                        <div class="carousel-caption text-start"
+                                            style="z-index: 2; bottom: 36px; left: 36px; right: 36px;">
+                                            <span class="badge rounded-pill mb-2 px-3 py-2"
+                                                style="background: rgba(175,140,226,0.35); color: rgb(210,190,255); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; backdrop-filter: blur(6px);">
+                                                TEFA MUTU
+                                            </span>
+                                            <h4 class="fw-bold text-white mb-0"
+                                                style="font-size: 1.5rem; text-shadow: 0 2px 12px rgba(0,0,0,0.4);">
+                                                {{ $s->title }}
+                                            </h4>
+                                        </div>
+                                    @endif
+                                </div>
+                            @empty
+                                <div class="carousel-item active">
+                                    <div class="d-flex align-items-center justify-content-center text-white"
+                                        style="height: 460px; background: rgba(255,255,255,0.05);">
+                                        <p class="mb-0 text-muted">Belum Ada Slider Yang Tersedia</p>
+                                    </div>
+                                </div>
+                            @endforelse
+                        </div>
+
+                        <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev"
+                            style="z-index: 2; width: 48px; height: 48px; background: rgba(255,255,255,0.12); border-radius: 50%; top: 50%; transform: translateY(-50%); left: 16px; backdrop-filter: blur(6px);">
+                            <span class="carousel-control-prev-icon" style="width: 16px; height: 16px;"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next"
+                            style="z-index: 2; width: 48px; height: 48px; background: rgba(255,255,255,0.12); border-radius: 50%; top: 50%; transform: translateY(-50%); right: 16px; backdrop-filter: blur(6px);">
+                            <span class="carousel-control-next-icon" style="width: 16px; height: 16px;"></span>
+                        </a>
+                    </div>
+
+                    {{-- Dekorasi bawah slider --}}
+                    <div class="d-flex align-items-center gap-2 mt-3 ps-1">
+                        <div style="width: 6px; height: 6px; border-radius: 50%; background: rgb(175,140,226);"></div>
+                        <small style="color: rgba(255,255,255,0.4); font-size: 11px; letter-spacing: 1px;">
+                            Geser untuk melihat lebih banyak
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     {{-- About: Struktur Organisasi & Visi Misi --}}
@@ -66,56 +134,75 @@
             $levels = $strukturs->groupBy('position_level')->sortKeys();
         @endphp
 
-        @forelse ($levels as $level => $members)
-            {{-- Card per level --}}
-            <div class="row justify-content-center mb-3" data-aos="fade-up">
-                @foreach ($members->sortBy('order') as $struktur)
-                    <div class="col-md-3 mb-3">
-                        <div class="card text-center border-0 shadow-sm rounded-lg h-100"
-                            @if ($level == $levels->keys()->first()) style="border-top: 3px solid {{ $struktur->bg_color }} !important;" @endif>
-                            <div class="card-body">
-                                <div class="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center overflow-hidden"
-                                    style="width:70px;height:70px;background:{{ $struktur->bg_color }};">
-                                    <img src="{{ asset('storage/assets/back/img/struktur/' . $struktur->image) }}"
-                                        alt="{{ $struktur->name }}" style="width:100%;height:100%;object-fit:cover;">
-                                </div>
-                                <h6 class="font-weight-bold mb-1">{{ $struktur->name }}</h6>
-                                <p class="text-muted small mb-2">{{ $struktur->title }}</p>
-                                <span class="badge badge-pill px-3 py-2"
-                                    style="background:{{ $struktur->bg_color }};color:#fff;font-size:11px;">
-                                    {{ $struktur->position_label }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+        <div class="org-wrapper">
+            @forelse ($levels as $level => $members)
+                {{-- Level cards --}}
+                <div class="org-level" data-aos="fade-up">
+                    @foreach ($members->sortBy('order') as $struktur)
+                        <div class="org-card {{ $level == $levels->keys()->first() ? 'is-top' : '' }}"
+                            style="
+                        {{ $level == $levels->keys()->first() ? 'border-top-color:' . $struktur->bg_color . ';' : '' }}
+                    ">
+                            {{-- Nomor urut kecil --}}
+                            <div
+                                style="
+                        position:absolute; top:10px; right:12px;
+                        width:18px; height:18px; border-radius:50%;
+                        background:{{ $struktur->bg_color }}22;
+                        font-size:9px; font-weight:700;
+                        color:{{ $struktur->bg_color }};
+                        display:flex; align-items:center; justify-content:center;
+                    ">
+                                {{ $loop->iteration }}</div>
 
-            {{-- Garis penghubung antar level (kecuali level terakhir) --}}
-            @if (!$loop->last)
-                <div class="row justify-content-center mb-0">
-                    <div class="col-md-3 text-center">
-                        <div style="width:2px;height:30px;background:rgb(175,140,226);margin:0 auto;"></div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mb-0">
-                    <div class="col-md-{{ min($levels->get($levels->keys()[$loop->index + 1])->count() * 3, 9) }}">
-                        <div style="height:2px;background:rgb(175,140,226);"></div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mb-3">
-                    @foreach ($levels->get($levels->keys()[$loop->index + 1]) as $next)
-                        <div class="col-md-3 text-center">
-                            <div style="width:2px;height:30px;background:rgb(175,140,226);margin:0 auto;"></div>
+                            <div class="org-avatar" style="border-color:{{ $struktur->bg_color }};">
+                                <img src="{{ asset('storage/assets/back/img/struktur/' . $struktur->image) }}"
+                                    alt="{{ $struktur->name }}">
+                            </div>
+
+                            <div class="org-name">{{ $struktur->name }}</div>
+                            <div class="org-title">{{ $struktur->title }}</div>
+                            <span class="org-badge" style="background:{{ $struktur->bg_color }};">
+                                {{ $struktur->position_label }}
+                            </span>
                         </div>
                     @endforeach
                 </div>
-            @endif
-        @empty
-            <div class="alert alert-danger text-center" role="alert">
-                Belum Ada Struktur Organisasi Yang Tersedia
-            </div>
-        @endforelse
+
+                {{-- Garis penghubung antar level --}}
+                @if (!$loop->last)
+                    @php
+                        $nextMembers = $levels->get($levels->keys()[$loop->index + 1]);
+                        $nextCount = $nextMembers->count();
+                        $hlineWidth = max(($nextCount - 1) * 196, 0);
+                    @endphp
+                    <div class="org-connector-wrap" data-aos="fade-up">
+                        {{-- Garis turun dari level atas --}}
+                        <div class="org-vline"></div>
+
+                        @if ($nextCount > 1)
+                            {{-- Garis horizontal --}}
+                            <div class="org-hline-row">
+                                <div class="org-hline-row-inner" style="width:{{ $hlineWidth }}px;"></div>
+                            </div>
+                            {{-- Garis turun ke tiap card berikutnya --}}
+                            <div class="org-vlines-row" style="gap:{{ 196 }}px;">
+                                @for ($i = 0; $i < $nextCount; $i++)
+                                    <div class="org-vline"></div>
+                                @endfor
+                            </div>
+                        @else
+                            <div class="org-vline"></div>
+                        @endif
+                    </div>
+                @endif
+
+            @empty
+                <div class="alert alert-danger text-center">
+                    Belum Ada Struktur Organisasi Yang Tersedia
+                </div>
+            @endforelse
+        </div>
 
         {{-- Visi & Misi --}}
         <div class="row mb-4">
@@ -170,147 +257,165 @@
     <div class="container mb-5">
 
         {{-- Berita Terbaru --}}
-        <div class="row mb-2">
-            <div class="col-md-12">
-                <h4><i class="bi bi-newspaper"></i> BERITA TERBARU</h4>
-                <hr style="border-top: 3px solid rgb(175,140,226); width: 60px; margin-left: 0;">
+        <div class="row mb-4" data-aos="fade-up">
+            <div class="col-md-8">
+                <p class="section-label">Informasi</p>
+                <h4 class="section-title"><i class="bi bi-newspaper me-2" style="color:rgb(175,140,226);"></i>Berita
+                    Terbaru</h4>
+                <div class="section-line"></div>
             </div>
+            @if ($beritas->count() > 0)
+                <div class="col-md-4 d-flex align-items-end justify-content-md-end mt-3 mt-md-0">
+                    <a href="{{ route('berita') }}" class="btn btn-sm px-4 py-2 rounded-pill fw-semibold"
+                        style="background: rgba(175,140,226,0.1); color: rgb(120,80,200); border: 1.5px solid rgba(175,140,226,0.35); font-size: 13px;">
+                        <i class="bi bi-grid me-1"></i> Lihat Semua
+                    </a>
+                </div>
+            @endif
         </div>
-        <div class="row">
+
+        {{-- Grid Berita --}}
+        <div class="row g-3">
             @forelse ($beritas as $index)
-                {{-- Contoh jika menggunakan loop --}}
-                <div class="col-md-4 mb-4" data-aos="zoom-in" data-aos-delay="50">
-                    <div class="card h-100 shadow-sm border-0 rounded-lg">
-                        <img src="{{ asset('storage/assets/back/img/berita/' . $index->image) }}" class="w-100"
-                            style="height:200px;object-fit:cover;border-top-left-radius:.3rem;border-top-right-radius:.3rem;">
-                        <div class="card-body">
-                            <a href="{{ route('berita.detail', $index->slug) }}" class="text-dark text-decoration-none">
-                                <h6>{{ $index->title }}</h6>
+                <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 80 }}">
+                    <div class="berita-card">
+
+                        {{-- Gambar --}}
+                        <div class="berita-img-wrap">
+                            <img src="{{ asset('storage/assets/back/img/berita/' . $index->image) }}"
+                                alt="{{ $index->title }}">
+                            <div class="berita-img-overlay"></div>
+                            <span class="berita-category-badge">
+                                <i class="bi bi-newspaper me-1"></i> Berita
+                            </span>
+                        </div>
+
+                        {{-- Body --}}
+                        <div class="berita-body">
+                            <a href="{{ route('berita.detail', $index->slug) }}" class="berita-title">
+                                {{ $index->title }}
                             </a>
-                            <p class="text-muted small mb-0">
-                                {!! Str::limit($index->content, 100, '...') !!}
+                            <p class="berita-excerpt mb-0">
+                                {!! Str::limit(strip_tags($index->content), 100, '...') !!}
                             </p>
                         </div>
-                        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
-                            <span>
-                                <i class="bi bi-calendar"></i>
-                                {{ $index->created_at->diffForHumans() }}
-                            </span>
 
-                            <span>
-                                <i class="bi bi-people"></i>
-                                {{ $index->user->asal_sekolah ?? 'Admin' }}
-                            </span>
+                        {{-- Footer --}}
+                        <div class="berita-footer">
+                            <div class="d-flex flex-column gap-1">
+                                <span class="berita-meta">
+                                    <i class="bi bi-calendar3"></i>
+                                    {{ $index->created_at->diffForHumans() }}
+                                </span>
+                                <span class="berita-meta">
+                                    <i class="bi bi-person-circle"></i>
+                                    {{ $index->user->asal_sekolah ?? 'Admin' }}
+                                </span>
+                            </div>
+                            <a href="{{ route('berita.detail', $index->slug) }}" class="berita-read-btn">
+                                Baca <i class="bi bi-arrow-right"></i>
+                            </a>
                         </div>
+
                     </div>
                 </div>
             @empty
-                <div class="alert alert-danger text-center" role="alert">
-                    Belum Ada Beita Yang Tersedia
+                <div class="col-12">
+                    <div class="text-center py-5" style="color:#ccc;">
+                        <i class="bi bi-newspaper" style="font-size:3rem; display:block; margin-bottom:12px;"></i>
+                        <p class="mb-0" style="font-size:14px;">Belum ada berita yang tersedia</p>
+                    </div>
                 </div>
             @endforelse
         </div>
-        @if ($beritas->count() > 0)
-            <div class="col-md-12 text-center mt-2 mb-3" data-aos="fade-up">
-                <a href="{{ route('berita') }}" class="btn btn-outline-secondary px-4">
-                    <i class="bi bi-arrows-fullscreen mr-2"></i> Lihat Semua Berita
-                </a>
-            </div>
-        @endif
 
         {{-- Produk & Sidebar --}}
-        <div class="row">
+        <div class="row mt-5">
+            {{-- Produk col-8 --}}
             <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <h4><i class="bi bi-box-seam"></i> PRODUK TERBARU</h4>
-                        <hr style="border-top: 3px solid rgb(175,140,226); width: 60px; margin-left: 0;">
+                {{-- Header --}}
+                <div class="d-flex justify-content-between align-items-end mb-4" data-aos="fade-up">
+                    <div>
+                        <p class="section-label">Unggulan</p>
+                        <h4 class="section-title">
+                            <i class="bi bi-box-seam me-2" style="color:rgb(175,140,226);"></i>Produk Terbaru
+                        </h4>
+                        <div class="section-line"></div>
                     </div>
+                    @if ($produks->count() > 0)
+                        <a href="{{ route('produk') }}" class="btn btn-sm px-4 py-2 rounded-pill fw-semibold mb-1"
+                            style="background:rgba(175,140,226,0.1);color:rgb(120,80,200);border:1.5px solid rgba(175,140,226,0.35);font-size:13px;">
+                            <i class="bi bi-grid me-1"></i> Lihat Semua
+                        </a>
+                    @endif
+                </div>
+
+                <div class="row g-3">
                     @forelse ($produks as $produk)
-                        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 100 }}">
-                            <div class="card h-100 shadow-sm border-0 rounded-lg overflow-hidden product-card">
-                                {{-- Label Kategori (Opsional jika ada relasi) --}}
-                                <div class="position-absolute px-3 py-1 bg-primary text-white small rounded-right"
-                                    style="z-index: 1; top: 15px; left: 0;">
-                                    {{ $produk->category->name ?? 'Produk' }}
-                                </div>
-
-                                {{-- Image dengan Wrap untuk Efek Hover --}}
-                                <div class="img-wrapper">
+                        <div class="col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 80 }}">
+                            <div class="produk-card">
+                                <div class="produk-img-wrap">
                                     <img src="{{ asset('storage/assets/back/img/produk/' . $produk->image) }}"
-                                        class="card-img-top" alt="{{ $produk->title }}"
-                                        style="height:220px; object-fit:cover; transition: transform 0.5s ease;">
+                                        alt="{{ $produk->title }}">
+                                    <div class="produk-img-overlay"></div>
+                                    <span class="produk-cat-badge">
+                                        <i class="bi bi-tag-fill me-1"></i>{{ $produk->category->name ?? 'Produk' }}
+                                    </span>
                                 </div>
-
-                                <div class="card-body d-flex flex-column">
-                                    <a href="{{ route('show.produk', $produk->slug) }}"
-                                        class="text-dark text-decoration-none">
-                                        <h5 class="card-title font-weight-bold mb-2" style="font-size: 1.1rem;">
-                                            {{ Str::limit($produk->title, 45) }}
-                                        </h5>
+                                <div class="produk-body">
+                                    <a href="{{ route('show.produk', $produk->slug) }}" class="produk-title">
+                                        {{ Str::limit($produk->title, 45) }}
                                     </a>
-
-                                    {{-- Label Harga --}}
-                                    <div class="mt-auto">
-                                        <h5 class="text-primary font-weight-bold mb-0">
-                                            Rp {{ number_format($produk->price, 0, ',', '.') }}
-                                        </h5>
+                                    <div class="produk-price">
+                                        Rp {{ number_format($produk->price, 0, ',', '.') }}
                                     </div>
-                                    <hr>
-
-                                    {{-- Label Kategori (Opsional jika ada relasi) --}}
-                                    <small class="text-muted">
-                                        <i class="bi bi-card-list mr-1"></i>
+                                    <span class="produk-meta">
+                                        <i class="bi bi-person-circle"></i>
                                         {{ $produk->user->asal_sekolah ?? 'Admin' }}
-                                    </small>
+                                    </span>
                                 </div>
-
-                                <div class="card-footer bg-white border-top-0 pb-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted">
-                                            <i class="far fa-calendar-alt mr-1"></i>
-                                            {{ $produk->created_at->diffForHumans() }}
-                                        </small>
-                                        <a href="{{ route('show.produk', $produk->slug) }}"
-                                            class="btn btn-sm btn-outline-primary rounded-pill px-3">
-                                            <i class="bi bi-eye"></i> Detail
-                                        </a>
-                                    </div>
+                                <div class="produk-footer">
+                                    <span class="produk-meta">
+                                        <i class="bi bi-calendar3"></i>
+                                        {{ $produk->created_at->diffForHumans() }}
+                                    </span>
+                                    <a href="{{ route('show.produk', $produk->slug) }}" class="produk-detail-btn">
+                                        Detail <i class="bi bi-arrow-right"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     @empty
-                        <div class="alert alert-danger text-center" role="alert">
-                            Belum Ada Produk Yang Tersedia
+                        <div class="col-12">
+                            <div class="text-center py-5" style="color:#ccc;">
+                                <i class="bi bi-box-seam" style="font-size:3rem;display:block;margin-bottom:12px;"></i>
+                                <p class="mb-0" style="font-size:14px;">Belum ada produk yang tersedia</p>
+                            </div>
                         </div>
                     @endforelse
                 </div>
-                @if ($produks->count() > 0)
-                    <div class="col-md-12 text-center mt-2 mb-3" data-aos="fade-up">
-                        <a href="{{ route('produk') }}" class="btn btn-outline-secondary px-4">
-                            <i class="bi bi-arrows-fullscreen mr-2"></i> Lihat Semua Produk
-                        </a>
-                    </div>
-                @endif
             </div>
-            {{-- Sidebar Kategori --}}
-            <div class="col-md-4" data-aos="fade-left">
-                <div class="mb-4 mt-5">
-                    <h4><i class="bi bi-list"></i> KATEGORI</h4>
-                </div>
-                <div class="list-group">
+
+            {{-- Sidebar Kategori col-4 --}}
+            <div class="col-md-4 mt-4 mt-md-0" data-aos="fade-left">
+                <div class="sidebar-kategori">
+                    <p class="sidebar-kat-title">Filter</p>
+                    <h5 class="sidebar-kat-heading">
+                        <i class="bi bi-list-ul me-2" style="color:rgb(175,140,226);"></i>Kategori
+                    </h5>
+
                     @forelse ($category as $c)
-                        <a href="{{ route('produk', ['category' => $c->slug]) }}"
-                            class="list-group-item list-group-item-action border-0 shadow-sm mb-2 rounded d-flex justify-content-between align-items-center">
-                            <span>
-                                <i class="bi bi-list-check me-2"></i>
+                        <a href="{{ route('produk', ['category' => $c->slug]) }}" class="kat-item">
+                            <span class="d-flex align-items-center gap-2">
+                                <i class="bi bi-grid-3x3-gap-fill"></i>
                                 {{ $c->name }}
                             </span>
-                            <span class="badge bg-primary rounded-pill">{{ $c->posts_count }}</span>
+                            <span class="kat-count">{{ $c->posts_count }}</span>
                         </a>
                     @empty
-                        <div class="alert alert-danger" role="alert">
-                            Belum Ada Kategori Yang Tersedia
+                        <div class="text-center py-4" style="color:#ccc;">
+                            <i class="bi bi-inbox" style="font-size:2rem;display:block;margin-bottom:8px;"></i>
+                            <p class="mb-0" style="font-size:13px;">Belum ada kategori</p>
                         </div>
                     @endforelse
                 </div>
@@ -321,51 +426,67 @@
     </div>
 
     {{-- Rekanan Industri --}}
-    <div class="py-5" data-aos="fade-up">
+    <div class="dudi-section mt-5" data-aos="fade-up">
         <div class="container">
-            <div class="row mb-4">
-                <div class="col-md-12 text-center">
-                    <h4><i class="bi bi-trophy"></i> REKANAN INDUSTRI</h4>
-                    <p class="text-muted">Mitra industri yang bekerja sama dengan TEFA MUTU</p>
-                    <hr style="border-top: 3px solid rgb(175,140,226); width: 60px; margin: 0 auto 1.5rem;">
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <p class="section-label">Kemitraan</p>
+                    <h4 class="section-title text-center" style="justify-content:center;">
+                        <i class="bi bi-trophy me-2" style="color:rgb(175,140,226);"></i>Rekanan Industri
+                    </h4>
+                    <p class="text-muted mt-2" style="font-size:13px;">
+                        Mitra industri yang bekerja sama dengan TEFA MUTU
+                    </p>
+                    <div class="section-line mx-auto"></div>
                 </div>
             </div>
 
-            <div id="rekananCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
-                <div class="carousel-inner">
+            @if ($dudis->count() > 0)
+                @php
+                    $dudiList = $dudis->values();
+                    $dudiDouble = $dudiList->merge($dudiList);
+                    $half = ceil($dudiDouble->count() / 2);
+                    $row1 = $dudiDouble->take($half);
+                    $row2 = $dudiDouble->skip($half)->values();
+                @endphp
 
-                    <div class="carousel-item active">
-                        <div class="row justify-content-center">
-                            @forelse ($dudis as $d)
-                                <div class="col-6 col-md-3 mb-3">
-                                    <a href="{{ $d->link }}" target="_blank" class="text-decoration-none">
-                                        <div class="card border-0 shadow-sm rounded-lg text-center py-3 h-100">
-                                            <div class="card-body">
-                                                <div class="mx-auto mb-2 rounded d-flex align-items-center justify-content-center overflow-hidden"
-                                                    style="width:56px;height:56px;background:#E6F1FB;">
-                                                    <img src="{{ asset('storage/assets/back/img/dudi/' . $d->image) }}"
-                                                        alt="{{ $d->name }}"
-                                                        style="width:100%;height:100%;object-fit:contain;">
-                                                </div>
-                                                <p class="mb-0 small font-weight-bold text-dark">{{ $d->name }}</p>
-                                                <p class="mb-0 text-muted" style="font-size:11px;">{{ $d->bidang }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
+                {{-- Baris 1 — kiri ke kanan --}}
+                <div class="dudi-track-wrap mb-0">
+                    <div class="dudi-track">
+                        @foreach ($dudiDouble as $d)
+                            <a href="{{ $d->link }}" target="_blank" class="dudi-card">
+                                <div class="dudi-logo-wrap">
+                                    <img src="{{ asset('storage/assets/back/img/dudi/' . $d->image) }}"
+                                        alt="{{ $d->name }}">
                                 </div>
-                            @empty
-                                <div class="col-12">
-                                    <div class="alert alert-danger" role="alert">
-                                        Belum Ada DUDI Yang Tersedia
-                                    </div>
-                                </div>
-                            @endforelse
-                        </div>
+                                <p class="dudi-name">{{ $d->name }}</p>
+                                <p class="dudi-bidang">{{ $d->bidang }}</p>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
-            </div>
 
+                {{-- Baris 2 — kanan ke kiri (arah berlawanan) --}}
+                <div class="dudi-track-wrap mt-4">
+                    <div class="dudi-track dudi-track-2">
+                        @foreach ($dudiDouble->reverse() as $d)
+                            <a href="{{ $d->link }}" target="_blank" class="dudi-card">
+                                <div class="dudi-logo-wrap">
+                                    <img src="{{ asset('storage/assets/back/img/dudi/' . $d->image) }}"
+                                        alt="{{ $d->name }}">
+                                </div>
+                                <p class="dudi-name">{{ $d->name }}</p>
+                                <p class="dudi-bidang">{{ $d->bidang }}</p>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @else
+                <div class="text-center py-5" style="color:#ccc;">
+                    <i class="bi bi-buildings" style="font-size:3rem;display:block;margin-bottom:12px;"></i>
+                    <p class="mb-0" style="font-size:14px;">Belum ada rekanan industri yang tersedia</p>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

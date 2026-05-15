@@ -65,28 +65,64 @@
     </div>
 </nav>
 
-{{-- CSS aktif & hover --}}
-<style>
-    body {
-        padding-top: 0 !important;
-    }
+@push('styles')
+    <style>
+        body {
+            padding-top: 0 !important;
+        }
 
-    {{-- Carousel menutupi penuh dari atas --}} #myCarousel {
-        margin-top: 0;
-    }
+        /* Navbar floating gap */
+        .navbar {
+            top: 16px;
+        }
 
-    #myCarousel img {
-        height: 100vh;
-        object-fit: cover;
-        object-position: center;
-    }
+        .navbar.scrolled {
+            top: 8px;
+            box-shadow: 0 8px 40px rgba(175, 140, 226, 0.25) !important;
+        }
 
-    {{-- Navbar tetap terlihat di atas hero --}} .navbar {
-        top: 16px;
-    }
+        /* Hero section agar tidak tertabrak navbar (tinggi navbar ~64px + top 16px + margin 10px) */
+        .hero-section {
+            padding-top: 100px;
+        }
 
-    {{-- Saat scroll, navbar sedikit mengecil --}} .navbar.scrolled {
-        top: 8px;
-        box-shadow: 0 8px 40px rgba(175, 140, 226, 0.25) !important;
-    }
-</style>
+        @media (max-width: 767px) {
+
+            /* Membuat menu menjadi jendela melayang */
+            .navbar-collapse {
+                position: absolute;
+                top: 100%;
+                /* Muncul tepat di bawah navbar */
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                margin-top: 12px;
+                padding: 20px;
+                border-radius: 24px;
+                /* Sudut membulat agar estetik */
+                border: 1px solid rgba(175, 140, 226, 0.2);
+                box-shadow: 0 15px 35px rgba(175, 140, 226, 0.2);
+                z-index: 1000;
+            }
+
+            /* Merapikan item menu di dalam floating window */
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .nav-item {
+                margin-bottom: 8px;
+            }
+
+            /* Tombol login agar muncul di dalam menu saat mobile */
+            .btn-sm.d-none.d-md-inline-block {
+                display: block !important;
+                margin-top: 15px;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+@endpush

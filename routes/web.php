@@ -31,7 +31,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('/berita', App\Http\Controllers\Admin\BeritaController::class, ['only' => ['create', 'store', 'destroy', 'index']]);
         Route::get('/berita/{slug}/edit', [App\Http\Controllers\Admin\BeritaController::class, 'edit'])->name('berita.edit');
         Route::put('/berita/{slug}/update', [App\Http\Controllers\Admin\BeritaController::class, 'update'])->name('berita.update');
-        Route::resource('order', \App\Http\Controllers\Admin\OrderController::class, ['only' => ['index']]);
+        Route::resource('order', \App\Http\Controllers\Admin\OrderController::class, ['only' => ['index', 'destroy']]);
         Route::resource('produk', \App\Http\Controllers\Admin\ProdukController::class, ['only' => ['create', 'store', 'destroy', 'index', 'edit', 'update']]);
 
 

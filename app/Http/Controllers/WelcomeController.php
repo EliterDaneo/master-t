@@ -93,8 +93,9 @@ class WelcomeController extends Controller
     {
         $sekolahs = User::select('id', 'asal_sekolah')->where('role', '!=', 'admin')
             ->get();
+        $categories = Category::where('status', 1)->withCount('posts')->paginate(6);
 
-        return view('home.order.index', compact('sekolahs'));
+        return view('home.order.index', compact('sekolahs', 'categories'));
     }
 
     public function storeOrder(Request $request)
